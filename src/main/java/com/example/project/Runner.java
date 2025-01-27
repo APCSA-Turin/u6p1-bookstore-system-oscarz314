@@ -168,7 +168,7 @@ public class Runner {
     }
 
     public static int pickBook(Scanner scanner, BookStore store){
-        System.out.print("Enter title to select"); // choose based on title or isbn
+        System.out.print("Enter title to select: "); // choose based on title or isbn
         String key = scanner.nextLine();
         for (int i = 0; i < store.getBooks().length; i++){
             if (key.equals(store.getBooks()[i].getTitle())){
