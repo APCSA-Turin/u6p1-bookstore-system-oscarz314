@@ -59,7 +59,7 @@ public class Runner {
 
     public static void option1(Scanner scanner, BookStore store){
         System.out.println("Enter the name of your book: ");
-        String name = scanner.next();
+        String name = scanner.nextLine();
 
         System.out.println("Enter the author of your book: ");
         String author = scanner.next();
@@ -168,19 +168,15 @@ public class Runner {
     }
 
     public static int pickBook(Scanner scanner, BookStore store){
-        System.out.print("Enter title or ISBN to select book: "); // choose based on title or isbn
-        String key = scanner.next();
-
-        int i = 0;
-        while(store.getBooks()[i] == null && !(key.equals(store.getBooks()[i].getTitle())) && !(key.equals(store.getBooks()[i].getIsbn())) && i < store.getBooks().length){
-            i++;
-        }
-
-        if (store.getBooks()[i] == null && !(key.equals(store.getBooks()[i].getTitle())) && !(key.equals(store.getBooks()[i].getIsbn()))){
-            return -1;
-        }
-
-        return i;
+        System.out.print("Enter title to select"); // choose based on title or isbn
+        String key = scanner.nextLine();
+        for (int i = 0; i < store.getBooks().length; i++){
+            if (key.equals(store.getBooks()[i].getTitle())){
+                return i;
+            }
+        } 
+        
+        return -1;
     }
     
 }
