@@ -49,7 +49,7 @@ public class User{
 
     // public String bookListInfo(){} //returns a booklist for the user, if empty, output "empty"
     public String bookListInfo(){
-        String temp = "\nBooks: \n";
+        String temp = "\nBooks: \n"; 
 
         for(int i = 0; i < book.length; i++){
             if (book[i] != null){
