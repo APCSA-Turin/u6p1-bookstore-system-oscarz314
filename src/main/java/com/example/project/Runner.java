@@ -82,9 +82,7 @@ public class Runner {
     }
 
     public static void option2(Scanner scanner, BookStore store){
-        System.out.println("Enter the index of your book (starting at 0): ");
-        int index = scanner.nextInt();
-        scanner.nextLine();
+        int index = pickBook(scanner, store);
 
         System.out.println("Enter the new quantity of your book: ");
         int quantity = scanner.nextInt();
@@ -94,8 +92,8 @@ public class Runner {
     }
 
     public static void option3(Scanner scanner, BookStore store){
-        System.out.println("Enter the index of your book (starting at 0): ");
-        int index = scanner.nextInt();
+        int index = pickBook(scanner, store);
+
         if (store.getBooks()[index] != null){
             System.out.println(store.getBooks()[index].bookInfo());
         }
@@ -123,24 +121,66 @@ public class Runner {
     }
 
     public static void option7(Scanner scanner, BookStore store){
-        System.out.println("Enter the index of your book (starting at 0): ");
-        int index = scanner.nextInt();
+        int index = pickBook(scanner, store);
+
+        // Find student
+        System.out.println("Enter ID of the student checking out: ");
+        int Id = scanner.nextInt();
         scanner.nextLine();
 
-        store.getBooks()[index].setQuantity(store.getBooks()[index].getQuantity() - 1);
+        //Merge student books with new books
+        Book[] studentBooks = store.getUsers()[Id - 100].getBooks();
+        int i = 0;
+        while (studentBooks[i] != null && i < studentBooks.length){
+            i++;
+        }
+        studentBooks[i] = store.getBooks()[index];
+        store.getUsers()[Id - 100].setBooks(studentBooks);
+
+        //subtract quantity
+        store.removeBook(store.getBooks()[index]);
         System.out.println("Book checked out!");
+        return;
     }
 
     public static void option8(Scanner scanner, BookStore store){
-        System.out.println("Enter the index of your book (starting at 0): ");
-        int index = scanner.nextInt();
+        int index = pickBook(scanner, store);
+
+        // Find student
+        System.out.println("Enter ID of the student checking in: ");
+        int Id = scanner.nextInt();
         scanner.nextLine();
 
-        store.getBooks()[index].setQuantity(store.getBooks()[index].getQuantity() + 1);
+        //subtract student books with new books
+        Book[] studentBooks = store.getUsers()[Id - 100].getBooks();
+        int i = 0;
+        while (studentBooks[i] != store.getBooks()[index] && i < studentBooks.length){
+            i++;
+        }
+
+        studentBooks[i] = null;
+        store.getUsers()[Id - 100].setBooks(studentBooks);
+
+        //add quantity
+        store.addBook(store.getBooks()[index]);
         System.out.println("Book checked in!");
+        return;
     }
 
+    public static int pickBook(Scanner scanner, BookStore store){
+        System.out.print("Enter title or ISBN to select book: ");
+        String key = scanner.next();
 
+        int i = 0;
+        while(store.getBooks()[i] == null && !(key.equals(store.getBooks()[i].getTitle())) && !(key.equals(store.getBooks()[i].getIsbn())) && i < store.getBooks().length){
+            i++;
+        }
 
+        if (store.getBooks()[i] == null && !(key.equals(store.getBooks()[i].getTitle())) && !(key.equals(store.getBooks()[i].getIsbn()))){
+            return -1;
+        }
+
+        return i;
+    }
     
 }

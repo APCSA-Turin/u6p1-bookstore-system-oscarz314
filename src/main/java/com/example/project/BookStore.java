@@ -63,7 +63,14 @@ public class BookStore{
 
     // public void addBook(Book book){}
     public void addBook(Book newBook){
-        int i = 0;
+        for (int i = 0; i < books.length; i++){ // if book already exists in array
+            if (books[i] == newBook){
+                books[i].setQuantity(books[i].getQuantity() + 1);
+                return;
+            }
+        }
+
+        int i = 0; // if book doesn't exist in array
         while (books[i] != null && i < books.length){
             i++;
         }
