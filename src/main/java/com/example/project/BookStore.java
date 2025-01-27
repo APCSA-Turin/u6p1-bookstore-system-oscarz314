@@ -80,10 +80,10 @@ public class BookStore{
 
     // public void insertBook(Book book, int index){}
     public void insertBook(Book book, int index){
-        if (books[index] == null){
+        if (books[index] == null){ // if there is empty space at spot
             books[index] = book;
         }
-        else
+        else // if no empty space at spot
         {
             Book temp = books[index];
             books[index] = book;
@@ -94,14 +94,14 @@ public class BookStore{
     // public void removeBook(Book book){}
     public void removeBook(Book book){
         int index = 0;
-        while (books[index] != book && index < books.length){
+        while (books[index] != book && index < books.length){ // find index of book
             index++;
         }
         
-        if (books[index] == book){
+        if (books[index] == book){  
             books[index].setQuantity(books[index].getQuantity() - 1);
 
-            if (books[index].getQuantity() == 0){
+            if (books[index].getQuantity() == 0){ // temp array
                 Book[] tempList = new Book[books.length - 1];
     
                 for (int i = 0; i < tempList.length; i++){
@@ -115,7 +115,7 @@ public class BookStore{
         
                 books = new Book[tempList.length];
         
-                for (int i = 0; i < tempList.length; i++){
+                for (int i = 0; i < tempList.length; i++){ // transfer array
                     books[i] = tempList[i];
                 }
             }
